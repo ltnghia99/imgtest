@@ -85,7 +85,7 @@
     <!-- Dòng chữ dưới -->
     <div class="footer-bar">
         <span class="left">LÊ TRỌNG NGHĨA</span>
-        <span class="center" id="scene-label">PHỐI CẢNH CHUYÊN ĐỀ 6 ANGKORBOREI</span>
+        <span class="center" id="scene-label">PANORAMA CHUYÊN ĐỀ 6 ANGKOR BOREI</span>
         <span class="right">ĐỒ ÁN TỐT NGHIỆP</span>
     </div>
 
@@ -97,15 +97,18 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        const texture = new THREE.TextureLoader().load('panoramav1.jpg');
+        const texture = new THREE.TextureLoader().load('panorama.jpg');
         const geometry = new THREE.SphereGeometry(1000, 60, 40);
         geometry.scale(-1, 1, 1);
         const material = new THREE.MeshBasicMaterial({ map: texture });
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
+        // ✅ Hiển thị đúng giữa (góc chính diện)
+        sphere.rotation.y = Math.PI / 2;
+
         function resetView() {
-            sphere.rotation.set(0, 0, 0);
+            sphere.rotation.set(0, Math.PI / 2, 0); // reset lại đúng vị trí giữa
         }
 
         // Điều khiển chuột & cảm ứng
@@ -136,7 +139,6 @@
             camera.updateProjectionMatrix();
         });
 
-        // Cảm ứng
         let touchStartX = 0, touchStartY = 0, touchPrevDistance = 0;
 
         document.addEventListener('touchstart', (event) => {
