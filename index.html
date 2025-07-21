@@ -1,38 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ltnghiaimg360°</title>
+    <title>ltnghiaimg360° Viewer</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
+            font-family: sans-serif;
         }
+
         canvas {
             display: block;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .controls button {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
 <body>
+    <div class="controls">
+        <button onclick="rotateView(0, -0.1)">⬆️ Lên</button>
+        <button onclick="rotateView(0, 0.1)">⬇️ Xuống</button>
+        <button onclick="rotateView(-0.1, 0)">⬅️ Trái</button>
+        <button onclick="rotateView(0.1, 0)">➡️ Phải</button>
+        <button onclick="resetView()">🔄 Reset</button>
+        <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Phần 1: Khởi tạo scene, camera, renderer
+        // Scene setup
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Phần 2: Tải ảnh panorama
-        const texture = new THREE.TextureLoader().load('panorama.jpg'); // ảnh phải đúng tên và đúng thư mục
+        // Panorama image
+        const texture = new THREE.TextureLoader().load('panorama.jpg');
         const geometry = new THREE.SphereGeometry(1000, 60, 40);
         geometry.scale(-1, 1, 1);
         const material = new THREE.MeshBasicMaterial({ map: texture });
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
-        // Phần 3: Điều khiển chuột
-        let isDragging = false;
-        let prevX = 0, prevY = 0;
+        // Control functions
+        function rotateView(yDelta, xDelta) {
+            sphere.rotation.y += yDelta;
+            sphere.rotation.x += xDelta;
+            sphere.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, sphere.rotation.x));
+        }
+
+        function resetView() {
+            sphere.rotation.set(0, 0, 0);
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.body.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Mouse drag
+        let isDragging = false, prevX = 0, prevY = 0;
 
         document.addEventListener('mousedown', e => {
             isDragging = true;
@@ -44,27 +97,24 @@
             if (!isDragging) return;
             const deltaX = e.clientX - prevX;
             const deltaY = e.clientY - prevY;
-
             sphere.rotation.y += deltaX * 0.005;
             sphere.rotation.x += deltaY * 0.005;
-            sphere.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, sphere.rotation.x)); // giới hạn nhìn lên/xuống
-
+            sphere.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, sphere.rotation.x));
             prevX = e.clientX;
             prevY = e.clientY;
         });
 
         document.addEventListener('mouseup', () => isDragging = false);
 
-        // Phần 4: Zoom bằng lăn chuột
+        // Mouse wheel zoom
         document.addEventListener('wheel', (event) => {
             camera.fov += event.deltaY * 0.05;
             camera.fov = Math.max(30, Math.min(90, camera.fov));
             camera.updateProjectionMatrix();
         });
 
-        // Phần 5: Cảm ứng (mobile)
-        let touchStartX = 0, touchStartY = 0;
-        let touchPrevDistance = 0;
+        // Touch support
+        let touchStartX = 0, touchStartY = 0, touchPrevDistance = 0;
 
         document.addEventListener('touchstart', (event) => {
             if (event.touches.length === 1) {
@@ -81,36 +131,32 @@
             if (event.touches.length === 1) {
                 const deltaX = event.touches[0].clientX - touchStartX;
                 const deltaY = event.touches[0].clientY - touchStartY;
-
                 sphere.rotation.y += deltaX * 0.005;
                 sphere.rotation.x += deltaY * 0.005;
                 sphere.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, sphere.rotation.x));
-
                 touchStartX = event.touches[0].clientX;
                 touchStartY = event.touches[0].clientY;
             } else if (event.touches.length === 2) {
                 const dx = event.touches[0].clientX - event.touches[1].clientX;
                 const dy = event.touches[0].clientY - event.touches[1].clientY;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-
                 const zoomFactor = (touchPrevDistance - distance) * 0.1;
                 camera.fov += zoomFactor;
                 camera.fov = Math.max(30, Math.min(90, camera.fov));
                 camera.updateProjectionMatrix();
-
                 touchPrevDistance = distance;
             }
             event.preventDefault();
         });
 
-        // Phần 6: Resize màn hình
+        // Resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Phần 7: Khởi chạy
+        // Start
         camera.position.set(0, 0, 0.1);
         function animate() {
             requestAnimationFrame(animate);
