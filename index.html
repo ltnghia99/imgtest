@@ -15,18 +15,18 @@
 
         .controls {
             position: absolute;
-            top: 50%;
+            bottom: 100px;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             gap: 10px;
             z-index: 10;
         }
 
         .controls button {
-            padding: 10px 16px;
+            padding: 10px 14px;
             border: none;
             border-radius: 8px;
             background-color: rgba(0, 0, 0, 0.5);
@@ -34,36 +34,45 @@
             font-size: 14px;
             cursor: pointer;
             transition: background 0.3s;
-            min-width: 120px;
         }
 
         .controls button:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        .footer-label {
+        .footer-left, .footer-right {
             position: absolute;
             bottom: 10px;
-            right: 14px;
             color: rgba(255, 255, 255, 0.7);
             font-size: 13px;
             font-style: italic;
             z-index: 10;
             user-select: none;
         }
+
+        .footer-left {
+            left: 14px;
+        }
+
+        .footer-right {
+            right: 14px;
+        }
     </style>
 </head>
 <body>
+    <!-- Nút điều khiển ngang -->
     <div class="controls">
-        <button onclick="rotateView(0, -0.1)">⬆️ Lên</button>
-        <button onclick="rotateView(0, 0.1)">⬇️ Xuống</button>
-        <button onclick="rotateView(-0.1, 0)">⬅️ Trái</button>
-        <button onclick="rotateView(0.1, 0)">➡️ Phải</button>
+        <button onclick="rotateView(-0.1, 0)">⬅️</button>
+        <button onclick="rotateView(0, -0.1)">⬆️</button>
+        <button onclick="rotateView(0, 0.1)">⬇️</button>
+        <button onclick="rotateView(0.1, 0)">➡️</button>
         <button onclick="resetView()">🔄 Reset</button>
         <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
     </div>
 
-    <div class="footer-label">Đồ án tốt nghiệp</div>
+    <!-- Dòng chữ trái & phải -->
+    <div class="footer-left">Lê Trọng Nghĩa</div>
+    <div class="footer-right">Đồ án tốt nghiệp</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
