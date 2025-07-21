@@ -104,11 +104,12 @@
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
-        // ✅ Hiển thị đúng hướng ban đầu
-        sphere.rotation.y = 0;
+        // ✅ Xoay 45° ngược chiều kim đồng hồ (trái)
+        sphere.rotation.y = -Math.PI / 4;
 
         function resetView() {
-            sphere.rotation.set(0, 0, 0); // Reset về hướng gốc
+            // ✅ Reset lại đúng hướng 45° trái
+            sphere.rotation.set(0, -Math.PI / 4, 0);
         }
 
         // Điều khiển chuột & cảm ứng
