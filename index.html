@@ -40,35 +40,30 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        .footer-line {
+        /* FOOTER LINE */
+        .footer-bar {
             position: absolute;
-            bottom: 10px;
+            bottom: 0;
             left: 0;
             width: 100%;
+            height: 32px;
+            background-color: #1a1a1a; /* xám đen */
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
-            font-size: 13px;
-            font-style: italic;
-            color: black;
+            box-sizing: border-box;
             z-index: 10;
         }
 
-        .footer-line::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            height: 1px;
-            width: 100%;
-            background-color: black;
-            z-index: -1;
-        }
-
-        .footer-line span {
-            background-color: white;
-            padding: 0 8px;
+        .footer-bar span {
+            color: white;
+            font-size: 13px;
+            font-style: italic;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 45%;
         }
     </style>
 </head>
@@ -83,8 +78,8 @@
         <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
     </div>
 
-    <!-- Dòng line + chữ -->
-    <div class="footer-line">
+    <!-- Line dưới cùng với chữ trắng -->
+    <div class="footer-bar">
         <span>Lê Trọng Nghĩa</span>
         <span>Đồ án tốt nghiệp</span>
     </div>
