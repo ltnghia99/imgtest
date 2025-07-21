@@ -13,20 +13,16 @@
             display: block;
         }
 
-        .controls {
+        .reset-control {
             position: absolute;
             bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 10px;
             z-index: 10;
         }
 
-        .controls button {
-            padding: 10px 14px;
+        .reset-control button {
+            padding: 10px 16px;
             border: none;
             border-radius: 8px;
             background-color: rgba(0, 0, 0, 0.5);
@@ -36,11 +32,10 @@
             transition: background 0.3s;
         }
 
-        .controls button:hover {
+        .reset-control button:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Footer bar with 3 sections */
         .footer-bar {
             position: absolute;
             bottom: 0;
@@ -82,24 +77,18 @@
     </style>
 </head>
 <body>
-    <!-- Nút điều khiển -->
-    <div class="controls">
-        <button onclick="rotateView(-0.1, 0)">⬅️</button>
-        <button onclick="rotateView(0, -0.1)">⬆️</button>
-        <button onclick="rotateView(0, 0.1)">⬇️</button>
-        <button onclick="rotateView(0.1, 0)">➡️</button>
+    <!-- Nút Reset duy nhất -->
+    <div class="reset-control">
         <button onclick="resetView()">🔄 Reset</button>
-        <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
     </div>
 
     <!-- Dòng chữ dưới -->
     <div class="footer-bar">
         <span class="left">Lê Trọng Nghĩa</span>
-        <span class="center" id="scene-label">Phối cảnh chuyên đề 6 Kinh đô AngkorBorei</span>
+        <span class="center" id="scene-label">Phối cảnh 1</span>
         <span class="right">Đồ án tốt nghiệp</span>
     </div>
 
-    <!-- Three.js & Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         const scene = new THREE.Scene();
@@ -115,24 +104,11 @@
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
-        function rotateView(yDelta, xDelta) {
-            sphere.rotation.y += yDelta;
-            sphere.rotation.x += xDelta;
-            sphere.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, sphere.rotation.x));
-        }
-
         function resetView() {
             sphere.rotation.set(0, 0, 0);
         }
 
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.body.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        }
-
+        // Điều khiển chuột & cảm ứng
         let isDragging = false, prevX = 0, prevY = 0;
 
         document.addEventListener('mousedown', e => {
@@ -160,6 +136,7 @@
             camera.updateProjectionMatrix();
         });
 
+        // Cảm ứng
         let touchStartX = 0, touchStartY = 0, touchPrevDistance = 0;
 
         document.addEventListener('touchstart', (event) => {
