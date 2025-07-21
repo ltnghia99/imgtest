@@ -84,9 +84,9 @@
 
     <!-- Dòng chữ dưới -->
     <div class="footer-bar">
-        <span class="left">Lê Trọng Nghĩa</span>
-        <span class="center" id="scene-label">Phối cảnh 1</span>
-        <span class="right">Đồ án tốt nghiệp</span>
+        <span class="left">LÊ TRỌNG NGHĨA</span>
+        <span class="center" id="scene-label">PANORAMA CHUYÊN ĐỀ 6 ANGKOR BOREI</span>
+        <span class="right">ĐỒ ÁN TỐT NGHIỆP</span>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -104,14 +104,14 @@
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
-        // ✅ Xoay trái 90 độ (ngược chiều kim đồng hồ)
-        sphere.rotation.y = -Math.PI / 2;
+        // ✅ Hiển thị đúng giữa (góc chính diện)
+        sphere.rotation.y = Math.PI / 2;
 
         function resetView() {
-            // ✅ Reset cũng xoay về -90°
-            sphere.rotation.set(0, -Math.PI / 2, 0);
+            sphere.rotation.set(0, Math.PI / 2, 0); // reset lại đúng vị trí giữa
         }
 
+        // Điều khiển chuột & cảm ứng
         let isDragging = false, prevX = 0, prevY = 0;
 
         document.addEventListener('mousedown', e => {
