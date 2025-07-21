@@ -40,14 +40,14 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* FOOTER LINE */
+        /* Footer bar with 3 sections */
         .footer-bar {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 32px;
-            background-color: #1a1a1a; /* xám đen */
+            background-color: #1a1a1a;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -59,11 +59,25 @@
         .footer-bar span {
             color: white;
             font-size: 13px;
-            font-style: italic;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 45%;
+            flex: 1;
+            text-align: center;
+        }
+
+        .footer-bar .left {
+            text-align: left;
+            font-style: italic;
+        }
+
+        .footer-bar .right {
+            text-align: right;
+            font-style: italic;
+        }
+
+        .footer-bar .center {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -78,12 +92,14 @@
         <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
     </div>
 
-    <!-- Line dưới cùng với chữ trắng -->
+    <!-- Dòng chữ dưới -->
     <div class="footer-bar">
-        <span>Lê Trọng Nghĩa</span>
-        <span>Đồ án tốt nghiệp</span>
+        <span class="left">Lê Trọng Nghĩa</span>
+        <span class="center" id="scene-label">Phối cảnh 1</span>
+        <span class="right">Đồ án tốt nghiệp</span>
     </div>
 
+    <!-- Three.js & Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         const scene = new THREE.Scene();
