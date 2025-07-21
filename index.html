@@ -43,11 +43,11 @@
         .footer-left, .footer-right {
             position: absolute;
             bottom: 10px;
-            color: rgba(255, 255, 255, 0.7);
             font-size: 13px;
             font-style: italic;
             z-index: 10;
             user-select: none;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .footer-left {
@@ -56,11 +56,16 @@
 
         .footer-right {
             right: 14px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px 12px;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body>
-    <!-- Nút điều khiển ngang -->
+    <!-- Nút điều khiển -->
     <div class="controls">
         <button onclick="rotateView(-0.1, 0)">⬅️</button>
         <button onclick="rotateView(0, -0.1)">⬆️</button>
@@ -70,10 +75,11 @@
         <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
     </div>
 
-    <!-- Dòng chữ trái & phải -->
+    <!-- Ghi chú chân trang -->
     <div class="footer-left">Lê Trọng Nghĩa</div>
     <div class="footer-right">Đồ án tốt nghiệp</div>
 
+    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         const scene = new THREE.Scene();
