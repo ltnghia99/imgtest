@@ -84,9 +84,9 @@
 
     <!-- Dòng chữ dưới -->
     <div class="footer-bar">
-        <span class="left">LÊ TRỌNG NGHĨA</span>
-        <span class="center" id="scene-label">PANORAMA CHUYÊN ĐỀ 6 ANGKOR BOREI</span>
-        <span class="right">ĐỒ ÁN TỐT NGHIỆP</span>
+        <span class="left">Lê Trọng Nghĩa</span>
+        <span class="center" id="scene-label">Phối cảnh 1</span>
+        <span class="right">Đồ án tốt nghiệp</span>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -104,11 +104,11 @@
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
-        // ✅ Hiển thị đúng giữa (góc chính diện)
-        sphere.rotation.y = Math.PI / 2;
+        // ✅ Hiển thị đúng hướng ban đầu
+        sphere.rotation.y = 0;
 
         function resetView() {
-            sphere.rotation.set(0, Math.PI / 2, 0); // reset lại đúng vị trí giữa
+            sphere.rotation.set(0, 0, 0); // Reset về hướng gốc
         }
 
         // Điều khiển chuột & cảm ứng
