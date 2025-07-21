@@ -15,26 +15,41 @@
 
         .controls {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            align-items: center;
+            gap: 10px;
             z-index: 10;
         }
 
         .controls button {
-            padding: 6px 10px;
+            padding: 10px 16px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
+            font-size: 14px;
             cursor: pointer;
             transition: background 0.3s;
+            min-width: 120px;
         }
 
         .controls button:hover {
             background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-label {
+            position: absolute;
+            bottom: 10px;
+            right: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            font-style: italic;
+            z-index: 10;
+            user-select: none;
         }
     </style>
 </head>
@@ -48,16 +63,16 @@
         <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
     </div>
 
+    <div class="footer-label">Đồ án tốt nghiệp</div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Scene setup
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Panorama image
         const texture = new THREE.TextureLoader().load('panorama.jpg');
         const geometry = new THREE.SphereGeometry(1000, 60, 40);
         geometry.scale(-1, 1, 1);
@@ -65,7 +80,6 @@
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
-        // Control functions
         function rotateView(yDelta, xDelta) {
             sphere.rotation.y += yDelta;
             sphere.rotation.x += xDelta;
@@ -84,7 +98,6 @@
             }
         }
 
-        // Mouse drag
         let isDragging = false, prevX = 0, prevY = 0;
 
         document.addEventListener('mousedown', e => {
@@ -106,14 +119,12 @@
 
         document.addEventListener('mouseup', () => isDragging = false);
 
-        // Mouse wheel zoom
         document.addEventListener('wheel', (event) => {
             camera.fov += event.deltaY * 0.05;
             camera.fov = Math.max(30, Math.min(90, camera.fov));
             camera.updateProjectionMatrix();
         });
 
-        // Touch support
         let touchStartX = 0, touchStartY = 0, touchPrevDistance = 0;
 
         document.addEventListener('touchstart', (event) => {
@@ -149,14 +160,12 @@
             event.preventDefault();
         });
 
-        // Resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Start
         camera.position.set(0, 0, 0.1);
         function animate() {
             requestAnimationFrame(animate);
