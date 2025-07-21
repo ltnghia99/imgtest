@@ -40,27 +40,35 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        .footer-left, .footer-right {
+        .footer-line {
             position: absolute;
             bottom: 10px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
             font-size: 13px;
             font-style: italic;
+            color: black;
             z-index: 10;
-            user-select: none;
-            color: rgba(255, 255, 255, 0.8);
         }
 
-        .footer-left {
-            left: 14px;
+        .footer-line::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background-color: black;
+            z-index: -1;
         }
 
-        .footer-right {
-            right: 14px;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 4px 12px;
-            border-radius: 6px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        .footer-line span {
+            background-color: white;
+            padding: 0 8px;
         }
     </style>
 </head>
@@ -75,11 +83,12 @@
         <button onclick="toggleFullscreen()">🖥️ Fullscreen</button>
     </div>
 
-    <!-- Ghi chú chân trang -->
-    <div class="footer-left">Lê Trọng Nghĩa</div>
-    <div class="footer-right">Đồ án tốt nghiệp</div>
+    <!-- Dòng line + chữ -->
+    <div class="footer-line">
+        <span>Lê Trọng Nghĩa</span>
+        <span>Đồ án tốt nghiệp</span>
+    </div>
 
-    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         const scene = new THREE.Scene();
